@@ -286,7 +286,7 @@ public class RadarChartRenderer extends LineRadarRenderer {
                 Utils.getPosition(center, r, sliceangle * i + rotationangle, p1out);
                 Utils.getPosition(center, r, sliceangle * (i + 1) + rotationangle, p2out);
 
-                c.drawLine(p1out.x, p1out.y, p2out.x, p2out.y, mWebPaint);
+                //c.drawLine(p1out.x, p1out.y, p2out.x, p2out.y, mWebPaint);
 
 
             }
