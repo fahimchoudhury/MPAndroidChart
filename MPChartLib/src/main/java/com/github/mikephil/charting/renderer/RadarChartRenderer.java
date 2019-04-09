@@ -191,7 +191,7 @@ public class RadarChartRenderer extends LineRadarRenderer {
                          pOut);
 
                 if (dataSet.isDrawValuesEnabled()) {
-                    drawValue(c, formatter.getRadarLabel(entry), pOut.x, pOut.y - yoffset, dataSet.getValueTextColor(j));
+                    drawValue(c, formatter.getRadarLabel(entry), pOut.x, pOut.y, dataSet.getHighlightCircleFillColor());
                 }
 
                 if (entry.getIcon() != null && dataSet.isDrawIconsEnabled()) {
@@ -228,8 +228,18 @@ public class RadarChartRenderer extends LineRadarRenderer {
     @Override
     public void drawValue(Canvas c, String valueText, float x, float y, int color) {
         mValuePaint.setColor(color);
-        c.drawText(valueText, x, y, mValuePaint);
+        //c.drawText(valueText, x, y, mValuePaint);
+
+        drawValueDot(c, x, y, color);
     }
+
+    private void drawValueDot(Canvas c, float x, float y, int color) {
+        final Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(color);
+        c.drawCircle(x, y, 10, paint);
+    }
+
 
     @Override
     public void drawExtras(Canvas c) {

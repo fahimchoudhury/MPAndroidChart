@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,6 +67,8 @@ public class RadarChartActivity extends DemoBase {
     xAxis.setTextSize(12f);
     xAxis.setYOffset(0f);
     xAxis.setXOffset(0f);
+    //xAxis.setAxisMinimum(0);
+    //xAxis.setAxisMaximum(80);
 
     xAxis.setValueFormatter(new ValueFormatter() {
 
@@ -82,9 +85,10 @@ public class RadarChartActivity extends DemoBase {
     yAxis.setTypeface(tfLight);
     yAxis.setLabelCount(3, false);
     yAxis.setTextSize(12f);
-    yAxis.setAxisMinimum(0f);
-    yAxis.setAxisMaximum(100f);
+    yAxis.setAxisMinimum(0);
+    yAxis.setAxisMaximum(100);
     yAxis.setDrawLabels(false);
+    yAxis.setDrawZeroLine(true);
 
     Legend l = chart.getLegend();
     l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -106,31 +110,48 @@ public class RadarChartActivity extends DemoBase {
     ArrayList<RadarEntry> entries1 = new ArrayList<>();
     ArrayList<RadarEntry> entries2 = new ArrayList<>();
 
+    final float proteinIntake = 11f;
+    final float proteinRecommended = 13.1f;
+    entries1.add(new RadarEntry((proteinIntake / proteinRecommended) * 100));
+    final float fatIntake = 45f;
+    final float fatRecommended = 50f;
+    entries1.add(new RadarEntry((fatIntake / fatRecommended) * 100));
+    final float carbIntake = 200f;
+    final float carbRecommended = 395f;
+    entries1.add(new RadarEntry((carbIntake / carbRecommended) * 100));
+
     // NOTE: The order of the entries when being added to the entries array determines their position around the center of
     // the chart.
     for (int i = 0; i < cnt; i++) {
-      float val1 = (float) (Math.random() * mul) + min;
-      entries1.add(new RadarEntry(val1));
+      //float val1 = (float) (Math.random() * mul) + min;
+      //entries1.add(new RadarEntry(val1));
 
-      float val2 = (float) (Math.random() * mul) + min;
+      //float val2 = (float) (Math.random() * mul) + min;
       entries2.add(new RadarEntry(100));
     }
 
     RadarDataSet set1 = new RadarDataSet(entries1, "Last Week");
-    set1.setColor(Color.rgb(243, 249, 251));
-    set1.setFillColor(Color.rgb(243, 249, 251));
+    //set1.setColor(Color.rgb(243, 249, 251));
+    //set1.setFillColor(Color.rgb(243, 249, 251));
     set1.setDrawFilled(true);
-    set1.setFillAlpha(85);
     set1.setDrawHighlightCircleEnabled(true);
     set1.setDrawHighlightIndicators(true);
 
+    final Drawable drawable1 = ContextCompat.getDrawable(this, R.drawable.gradient_green_user_data);
+    set1.setFillDrawable(drawable1);
+    set1.setHighlightCircleFillColor(Color.rgb(23, 107, 129));
+
     RadarDataSet set2 = new RadarDataSet(entries2, "This Week");
-    set2.setColor(Color.rgb(121, 162, 175));
-    set2.setFillColor(Color.rgb(121, 162, 175));
+    //set2.setColor(Color.rgb(121, 162, 175));
+    //set2.setFillColor(Color.rgb(121, 162, 175));
+    final Drawable drawable2 = ContextCompat
+        .getDrawable(this, R.drawable.gradient_green_recommended);
+    set2.setFillDrawable(drawable2);
     set2.setDrawFilled(true);
-    set2.setFillAlpha(180);
+    //set2.setFillAlpha(180);
     set2.setDrawHighlightCircleEnabled(true);
     set2.setDrawHighlightIndicators(true);
+    set2.setHighlightCircleFillColor(Color.rgb(153, 234, 255));
 
     ArrayList<IRadarDataSet> sets = new ArrayList<>();
     sets.add(set2);
@@ -139,7 +160,7 @@ public class RadarChartActivity extends DemoBase {
     RadarData data = new RadarData(sets);
     data.setValueTypeface(tfLight);
     data.setValueTextSize(8f);
-    data.setDrawValues(false);
+    data.setDrawValues(true);
     data.setValueTextColor(Color.BLACK);
 
     chart.setData(data);

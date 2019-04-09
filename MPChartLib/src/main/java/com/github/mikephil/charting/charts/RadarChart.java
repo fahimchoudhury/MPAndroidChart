@@ -134,9 +134,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
         mXAxisRenderer.renderAxisLabels(canvas);
 
-        if (mDrawWeb)
-            mRenderer.drawExtras(canvas);
-
         if (mYAxis.isEnabled() && mYAxis.isDrawLimitLinesBehindDataEnabled())
             mYAxisRenderer.renderLimitLines(canvas);
 
@@ -150,13 +147,16 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
         mYAxisRenderer.renderAxisLabels(canvas);
 
-        mRenderer.drawValues(canvas);
-
         mLegendRenderer.renderLegend(canvas);
 
         drawDescription(canvas);
 
         drawMarkers(canvas);
+
+        if (mDrawWeb)
+            mRenderer.drawExtras(canvas);
+
+        mRenderer.drawValues(canvas);
     }
 
     /**
